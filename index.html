@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="500" height="500" id="canvas">
+        Тэг канва не работает
+    </canvas>
+</body>
+<script>
+    let canvas = document.getElementById("canvas")
+    let ctx = canvas.getContext("2d")
+    // const pi = Math.PI
+    // ctx.beginPath();
+    // ctx.arc(100,100,50, pi / 2, pi * 2)
+    // ctx.closePath()
+    // ctx.stroke()
+
+    // ctx.fillStyle = "red"
+    // ctx.fillRect(0,0, 300, 300)
+  function random(min,max) {
+    return Math.floor(Math.random() * (max - min + 1) - min)
+  }
+ function getRandomColor() {
+    let letters = "0123456789ABCDEF"
+    let color = "#"
+    for (let i = 0; i < 6; i++) {
+         color += letters[random(0, letters.length)]
+     }
+     return color
+ }
+    let count = 0;
+    let scale = 20;
+        let isCount100 = false
+            ctx.fillStyle = "getRandomColor()"
+    function draw() {
+    
+    let angle = count * 2;
+        let radius = scale * Math.sqrt(count) + 50;
+        let positionX = radius * Math.sin(angle) + canvas.width / 2;
+        let positionY = radius * Math.cos(angle) + canvas.height / 2;
+            ctx.beginPath();
+            ctx.arc(positionX, positionY, 20, 0, Math.PI * 2);
+            ctx.closePath();
+        
+            ctx.fill()
+            ctx.stroke();
+            if (count >= 100){
+                   isCount100 = true
+                   scale = random(51,100)
+                   ctx.fillStyle = getRandomColor()
+            }
+            if (count <= 0){
+                    ctx.fillStyle = getRandomColor()
+                ctx.strokeStyle = getRandomColor()
+                   isCount100 = false
+            }
+            if (isCount100){
+                count --
+            } else {
+               count++ 
+            }
+            
+        }
+    function animate() {
+        draw();
+        window.requestAnimationFrame(animate);
+    }
+
+    animate();
+
+</script>
+</html>
